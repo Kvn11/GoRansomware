@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <img alt="Wails logo" src="./assets/images/logo.png" class="logo zoomIn">
     <HelloWorld/>
   </div>
 </template>

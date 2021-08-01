@@ -1,13 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Fira+Mono:400');
 
-#app {
-  font-family: "Fira Mono", monospace;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #eee;
-  margin-top: 60px;
-}
 
 html {
   height: 100%;
@@ -17,7 +9,7 @@ html {
 }
 
 .logo {
-  width: 24em;
+  width: 18em;
 }
 
 /* roboto-regular - latin */
@@ -43,18 +35,27 @@ body{
   display: flex;
   width: 100vw;
   height: 100vh;
+  text-align: center;
   align-items: center;
   justify-content: center;
   margin: 0;
   background: #131313;
-  color: #fff;
-  font-size: 16px;
+  color: #77079d;
+  font-size: 18px;
   font-family: 'Fira Mono', monospace;
-  letter-spacing: -7px;
+  letter-spacing: -2px;
+}
+
+input {
+  margin-right: 15px;
 }
 
 div{
   animation: glitch 1s linear infinite;
+}
+
+p {
+  margin-bottom: 70px;
 }
 
 @keyframes glitch{
