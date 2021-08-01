@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-func main() {
+func routine() {
 
 	// Need to check if we are an admin first. If we are not, re-run as admin, and close out this process.
 	if !AmAdmin() {
