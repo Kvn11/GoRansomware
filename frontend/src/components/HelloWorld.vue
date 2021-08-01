@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h1>{{message}}</h1>
-    <a @click="getMessage">Press Me!</a>
+    <!-- <a @click="getMessage">Press Me!</a> -->
   </div>
 </template>
 
@@ -9,7 +9,7 @@
 export default {
   data() {
     return {
-      message: " "
+      message: "You have been infected by 3vilC4t virus. Your files have been encrypted. Only I have the key to restore your files. If you try to decrypt it on your own, you may cause irreversible damage and they will not be able to be restored. Address coming soon."
     };
   },
   methods: {
