@@ -4,8 +4,8 @@
     <img alt="3vilC4t" src="../assets/images/logo.png" class="logo zoomIn">
     <p :title="message2">{{message2}}</p>
     <p :title="address">{{address}}</p>
-    <input type="text" id="decKey" name="decKey" placeholder="Decryption Key">
-    <a @click="launchForm">Decrypt</a>
+    <input type="text" id="decKey" name="decKey" v-model="decKey" placeholder="Decryption Key">
+    <a @click="beginDecryption">Decrypt</a>
   </div>
 </template>
 
@@ -15,15 +15,14 @@ export default {
     return {
       message: "You have been infected by 3vilC4t virus. Your files have been encrypted. Do not attempt to decrypt it on your own. It will cause irreversible damage.\n",
       message2: "Pay the ransom to receive the decryption key. You only have 1 attempt.",
-      address: "0.0048 BTC to mjD6LE6rK9cGSrWmuTK5haFULEUUyceakf "
+      address: "0.0048 BTC to mjD6LE6rK9cGSrWmuTK5haFULEUUyceakf ",
+      decKey: ""
     };
   },
   methods: {
-    launchForm: function() {
+    beginDecryption: function() {
       var self = this;
-      window.backend.basic().then(result => {
-        self.message = result;
-      });
+      console.log("Decryption key is ", self.decKey)
     }
   }
 };

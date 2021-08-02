@@ -1,17 +1,17 @@
 <template>
   <div id="app">
-    <HelloWorld/>
+    <BadCat/>
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import BadCat from "./components/BadCat.vue";
 import "./assets/css/main.css";
 
 export default {
   name: "app",
   components: {
-    HelloWorld
+    BadCat
   }
 };
 </script>
