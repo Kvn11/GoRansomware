@@ -18,8 +18,10 @@ func isFirstTime() bool {
 	return false
 }
 
-func getEncryptedKey() []byte {
-	return EncryptionKey
+func getEncryptedKey() string {
+	var result string
+	result = b64.StdEncoding.EncodeToString(EncryptionKey)
+	return result
 }
 
 func b64DecodeEncryptionKey(key []byte) string {

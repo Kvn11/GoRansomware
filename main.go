@@ -15,6 +15,12 @@ func osEnvWrapper() string {
 	return os.Getenv("USERPROFILE")
 }
 
+func getEncryptionKeyWrapper() string {
+	var result string
+	result = getEncryptedKey()
+	return result
+}
+
 //go:embed frontend/dist/app.js
 var js string
 
@@ -31,8 +37,7 @@ func main() {
 		CSS:    css,
 		Colour: "#131313",
 	})
-	app.Bind(DecryptSystem)
-	app.Bind(osEnvWrapper)
-	app.Bind(getEncryptedKey)
+	app.Bind(getEncryptionKeyWrapper)
+	app.Bind(basic)
 	app.Run()
 }
