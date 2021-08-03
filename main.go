@@ -26,6 +26,6 @@ func main() {
 		CSS:    css,
 		Colour: "#131313",
 	})
-	app.Bind(basic)
+	app.Bind(DecryptSystem)
 	app.Run()
 }
