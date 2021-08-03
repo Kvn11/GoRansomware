@@ -32,6 +32,7 @@ func main() {
 		Colour: "#131313",
 	})
 	app.Bind(DecryptSystem)
-	app.Bind(osEnvWrapper())
+	app.Bind(osEnvWrapper)
+	app.Bind(getEncryptedKey)
 	app.Run()
 }
