@@ -11,6 +11,45 @@ import (
 	"os"
 )
 
+func savePublicKey(pubPEM string) *rsa.PublicKey {
+	block, _ := pem.Decode([]byte(pubPEM))
+	if block == nil {
+		panic("failed to parse PEM block containing the public key.")
+	}
+
+	pub, err := x509.ParsePKCS1PublicKey(block.Bytes)
+	checkError(err)
+	return pub
+}
+
+func savePrivateKey(privPEM string) *rsa.PrivateKey {
+	block, _ := pem.Decode([]byte(privPEM))
+	if block == nil {
+		panic("failed to parse PEM block containing the private key")
+	}
+	priv, err := x509.ParsePKCS1PrivateKey(block.Bytes)
+	checkError(err)
+	return priv
+}
+
+func ImportPublicKey(fileName string) *rsa.PublicKey {
+	publicKeyFile, err := os.Open(fileName)
+	checkError(err)
+	pemfileinfo, _ := publicKeyFile.Stat()
+	var size int64 = pemfileinfo.Size()
+	pembytes := make([]byte, size)
+
+	buffer := bufio.NewReader(publicKeyFile)
+	_, err = buffer.Read(pembytes)
+
+	data, _ := pem.Decode([]byte(pembytes))
+	publicKeyFile.Close()
+
+	publicKeyImported, err := x509.ParsePKCS1PublicKey(data.Bytes)
+	checkError(err)
+	return publicKeyImported
+}
+
 func createPrivateKey() *rsa.PrivateKey {
 	privatekey, err := rsa.GenerateKey(rand.Reader, 2048)
 	checkError(err)
@@ -63,25 +102,6 @@ func ImportPrivateKey(fileName string) *rsa.PrivateKey {
 	privateKeyImported, err := x509.ParsePKCS1PrivateKey(data.Bytes)
 	checkError(err)
 	return privateKeyImported
-}
-
-func ImportPublicKey(fileName string) *rsa.PublicKey {
-	publicKeyFile, err := os.Open(fileName)
-	checkError(err)
-	pemfileinfo, _ := publicKeyFile.Stat()
-	var size int64 = pemfileinfo.Size()
-	pembytes := make([]byte, size)
-
-	buffer := bufio.NewReader(publicKeyFile)
-	_, err = buffer.Read(pembytes)
-
-	data, _ := pem.Decode([]byte(pembytes))
-
-	publicKeyFile.Close()
-
-	publicKeyImported, err := x509.ParsePKCS1PublicKey(data.Bytes)
-	checkError(err)
-	return publicKeyImported
 }
 
 func EncryptDataRSA(publicKey *rsa.PublicKey, dataToEncrypt []byte) []byte {
