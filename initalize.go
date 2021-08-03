@@ -2,9 +2,17 @@ package main
 
 import (
 	"crypto/rand"
+	b64 "encoding/base64"
 	"fmt"
 	"os"
 )
+
+// Will need this function to decrypt the user input.
+func DecodeB64(data string) []byte {
+	decData, err := b64.StdEncoding.DecodeString(data)
+	checkError(err)
+	return decData
+}
 
 func isFirstTime() bool {
 	cookie := os.Getenv("USERPROFLE") + "\\Desktop\\" + "README.PWN"
