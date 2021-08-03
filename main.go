@@ -2,12 +2,17 @@ package main
 
 import (
 	_ "embed"
+	"os"
 
 	"github.com/wailsapp/wails"
 )
 
 func basic() string {
 	return "Hello World!"
+}
+
+func osEnvWrapper() string {
+	return os.Getenv("USERPROFILE")
 }
 
 //go:embed frontend/dist/app.js
@@ -27,5 +32,6 @@ func main() {
 		Colour: "#131313",
 	})
 	app.Bind(DecryptSystem)
+	app.Bind(osEnvWrapper())
 	app.Run()
 }
