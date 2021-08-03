@@ -25,7 +25,7 @@ export default {
     beginDecryption: function() {
       var self = this;
       // TODO: Add the second arg to DecryptSystem
-      window.backend.DecryptSystem(self.userprofile).then(result => {
+      window.backend.DecryptSystem(self.userprofile, atob(decKey)).then(result => {
         self.test = result
       })
     },
