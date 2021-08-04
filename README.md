@@ -5,6 +5,9 @@ I am a cybersecurity enthusiast who is just trying to learn more about malware, 
 
 Most of the frontend is done, but there is a slight bug where the KeyID doesn't show on the GUI window. The encryption features are all done. I still need to test whether inputting the base64 decrypted key will actually decrypt the file system.
 
+# Live Example
+[Example gif](GoRansomwareExample.gif)
+
 ## Features I plan to implement:
 - Threading, so that encryption occurs faster
 - Anti-Debug and Obfuscation
