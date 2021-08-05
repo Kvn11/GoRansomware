@@ -15,9 +15,11 @@ func savePublicKey(pubPEM string) *rsa.PublicKey {
 		panic("failed to parse PEM block containing the public key.")
 	}
 
-	pub, err := x509.ParsePKCS1PublicKey(block.Bytes)
+	//pub, err := x509.ParsePKCS1PublicKey(block.Bytes)
+	pubkeyInterface, err := x509.ParsePKIXPublicKey(block.Bytes)
+	pubkey, _ := pubkeyInterface.(*rsa.PublicKey)
 	checkError(err)
-	return pub
+	return pubkey
 }
 
 func savePrivateKey(privPEM string) *rsa.PrivateKey {
