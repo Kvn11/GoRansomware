@@ -12,3 +12,9 @@ Most of the frontend is done, but there is a slight bug where the KeyID doesn't 
 - Threading, so that encryption occurs faster
 - Anti-Debug and Obfuscation
 - AV Evasion
+
+# How to Build
+Make sure you have Wails installed. Then simply enter the directory in a terminal and run:
+```
+wails build
+```
